@@ -49,3 +49,7 @@
 @interface UITextField (NLKeyboardDelegateImplement)<NLKeyboardDelegate>
 @end
 
+@interface NSArray(Extension)
+- (NSArray *)shuffled;// 返回随机后的数组
+@end
+

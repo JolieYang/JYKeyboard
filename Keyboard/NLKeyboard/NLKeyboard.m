@@ -16,25 +16,34 @@
     if ([_delegate respondsToSelector:@selector(keyboard:willInsertKey:)]) {
         [_delegate keyboard:self willInsertKey:[sender keyValue]];
     }
-    [[_delegate textField] insertText:[sender keyValue]];
+    if ([_delegate textField]) {
+        [[_delegate textField] insertText:[sender keyValue]];
+    }
 }
 - (IBAction)onDelete:(id)sender {
     if ([_delegate respondsToSelector:@selector(keyboardWillDeleteKey:)]) {
         [_delegate keyboardWillDeleteKey:self];
     }
-    NSString *originText = [_delegate textField].text;
-    [_delegate textField].text = [originText substringToIndex:originText.length - 1];
-                                  
+    if ([_delegate textField]) {
+        NSString *originText = [_delegate textField].text;
+        [_delegate textField].text = [originText substringToIndex:originText.length - 1];
+    }
+    
 }
 - (IBAction)onDone:(id)sender {
     if ([_delegate respondsToSelector:@selector(keyboardWillDone:)]) {
         [_delegate keyboardWillDone:self];
     }
-    [[_delegate textField] resignFirstResponder];
+    if ([_delegate textField]) {
+        [[_delegate textField] resignFirstResponder];
+    }
 }
 - (IBAction)onClear:(id)sender {
-    if (_delegate) {
+    if ([_delegate respondsToSelector:@selector(keyboardWillClear:)]) {
         [_delegate keyboardWillClear:self];
+    }
+    if ([_delegate textField]) {
+        [_delegate textField].text = nil;
     }
 }
 
@@ -64,5 +73,11 @@
 @implementation UITextField(NLKeyboardDelegateImplement)
 - (UITextField *)textField {
     return self;
+}
+@end
+
+@implementation NSArray(Extension)
+- (NSArray *)shuffled {
+    return nil;
 }
 @end

@@ -10,6 +10,7 @@
 		A02FFF4F1EC58E3F004A09AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A02FFF4C1EC58E3F004A09AC /* AppDelegate.m */; };
 		A02FFF501EC58E3F004A09AC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A02FFF4E1EC58E3F004A09AC /* ViewController.m */; };
 		A02FFF5B1EC59F5B004A09AC /* NLKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = A02FFF5A1EC59F5B004A09AC /* NLKeyboard.m */; };
+		A02FFF5E1EC5B336004A09AC /* NLInputConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = A02FFF5D1EC5B336004A09AC /* NLInputConnection.m */; };
 		A0B842651D3F6B27008636BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A0B842641D3F6B27008636BD /* main.m */; };
 		A0B8426E1D3F6B27008636BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0B8426C1D3F6B27008636BD /* Main.storyboard */; };
 		A0B842701D3F6B27008636BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0B8426F1D3F6B27008636BD /* Assets.xcassets */; };
@@ -25,6 +26,8 @@
 		A02FFF4E1EC58E3F004A09AC /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		A02FFF591EC59F5B004A09AC /* NLKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NLKeyboard.h; sourceTree = "<group>"; };
 		A02FFF5A1EC59F5B004A09AC /* NLKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NLKeyboard.m; sourceTree = "<group>"; };
+		A02FFF5C1EC5B336004A09AC /* NLInputConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NLInputConnection.h; sourceTree = "<group>"; };
+		A02FFF5D1EC5B336004A09AC /* NLInputConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NLInputConnection.m; sourceTree = "<group>"; };
 		A0B842601D3F6B27008636BD /* Keyboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Keyboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0B842641D3F6B27008636BD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A0B8426D1D3F6B27008636BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -52,6 +55,8 @@
 			children = (
 				A02FFF591EC59F5B004A09AC /* NLKeyboard.h */,
 				A02FFF5A1EC59F5B004A09AC /* NLKeyboard.m */,
+				A02FFF5C1EC5B336004A09AC /* NLInputConnection.h */,
+				A02FFF5D1EC5B336004A09AC /* NLInputConnection.m */,
 			);
 			path = NLKeyboard;
 			sourceTree = "<group>";
@@ -171,6 +176,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A02FFF5E1EC5B336004A09AC /* NLInputConnection.m in Sources */,
 				A02FFF501EC58E3F004A09AC /* ViewController.m in Sources */,
 				A0B842651D3F6B27008636BD /* main.m in Sources */,
 				A0B842811D3F7D42008636BD /* NLKeyboardNumberPad.m in Sources */,
