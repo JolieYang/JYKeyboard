@@ -19,7 +19,7 @@
     return keyboard;
 }
 + (id)standardShuffledKeyboard {
-    NLKeyboardNumberPad *keyboard = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass(self) owner:self options:nil] objectAtIndex:0];
+    NLKeyboardNumberPad *keyboard = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass(self) owner:self options:nil] objectAtIndex:1];
     
     return keyboard;
 }

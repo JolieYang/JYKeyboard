@@ -28,6 +28,9 @@
 @protocol NLKeyNote <NSObject>
 - (NSString *)keyValue;
 @end
+@protocol NLInputSource <NSObject>
+- (void)setInputViewWithKeyboard:(id<NLKeyboard>)keyboard;
+@end
 
 @protocol NLKeyboardDelegate <NSObject>
 - (void)keyboard:(id<NLKeyboard>)keyboard willInsertKey:(NSString*)key;
@@ -35,7 +38,8 @@
 - (void)keyboardWillDone:(id<NLKeyboard>)keyboard;
 @optional
 - (void)keyboardWillClear:(id<NLKeyboard>)keyboard;
-- (UITextField*)textField;
+// ps: 无法共用同一个自定义keyboard
+- (UIView *)inputSource;
 @end
 
 @interface UILabel (NLKeyNote)<NLKeyNote>
@@ -47,6 +51,11 @@
 - (void)setInputViewWithKeyboard:(id<NLKeyboard>)keyboard;
 @end
 @interface UITextField (NLKeyboardDelegateImplement)<NLKeyboardDelegate>
+@end
+
+@interface UITextView(NLKeyboardExtension)<NLInputSource>
+@end
+@interface UISearchBar(NLKeyboardExtension)<NLInputSource>
 @end
 
 @interface NSArray(Extension)

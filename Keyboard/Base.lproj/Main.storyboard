@@ -32,8 +32,14 @@
                                     <action selector="touchUpInsideButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IuU-xx-l3T"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="hi" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="DCD-mW-zKQ">
+                                <rect key="frame" x="27" y="148" width="266" height="68"/>
+                                <color key="backgroundColor" red="0.92469114070000002" green="0.9219462276" blue="0.92479699849999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eW4-MC-Vwa">
-                                <rect key="frame" x="139" y="199" width="42" height="21"/>
+                                <rect key="frame" x="139" y="251" width="42" height="21"/>
                                 <color key="backgroundColor" red="0.99963909387588501" green="1" blue="0.99975615739822388" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -46,7 +52,7 @@
                             <constraint firstItem="Lqk-oY-35z" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4dL-EE-vhz"/>
                             <constraint firstItem="98T-9T-AJG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="L6S-3f-MVu"/>
                             <constraint firstItem="98T-9T-AJG" firstAttribute="top" secondItem="Lqk-oY-35z" secondAttribute="bottom" constant="35" id="PHj-u7-djW"/>
-                            <constraint firstItem="eW4-MC-Vwa" firstAttribute="top" secondItem="98T-9T-AJG" secondAttribute="bottom" constant="59" id="aho-dq-5yM"/>
+                            <constraint firstItem="eW4-MC-Vwa" firstAttribute="top" secondItem="98T-9T-AJG" secondAttribute="bottom" constant="111" id="aho-dq-5yM"/>
                             <constraint firstItem="eW4-MC-Vwa" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="np2-Cg-U3a"/>
                         </constraints>
                     </view>
@@ -55,6 +61,7 @@
                         <outlet property="button" destination="98T-9T-AJG" id="oAF-wk-W5F"/>
                         <outlet property="inputTF" destination="Lqk-oY-35z" id="fAP-C9-7yE"/>
                         <outlet property="label" destination="eW4-MC-Vwa" id="QaN-lE-Xax"/>
+                        <outlet property="textView" destination="DCD-mW-zKQ" id="9qu-xi-CdG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

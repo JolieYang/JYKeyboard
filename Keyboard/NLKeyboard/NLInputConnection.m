@@ -9,7 +9,18 @@
 #import "NLInputConnection.h"
 
 @implementation UIView(NLInputConnection)
-
+- (NSString*)inputInitText {
+    return nil;
+}
+- (NSString*)inputDisplayText {
+    return nil;
+}
+- (void)setInputViewWithTextField:(UITextField*)textField {
+    
+}
+- (void)keyboard:(id<NLKeyboard>)keyboard textField:(UITextField*)textField doUpdateText:(NSString*)text {
+    
+}
 
 @end
 

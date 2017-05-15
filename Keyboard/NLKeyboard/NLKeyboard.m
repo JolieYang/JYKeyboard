@@ -11,9 +11,7 @@
 @end
 
 @implementation NLAbstractKeyboard
-- (void)awakeFromNib {
-    
-}
+
 - (void)willMoveToWindow:(UIWindow *)newWindow {
     if (newWindow) {
         if (_randomItems) {
@@ -22,22 +20,99 @@
     }
 }
 
+#pragma mark NLKeyboard Protocol
+- (void)keysRandomLayout {
+    [self loadRandomItems];
+}
+- (IBAction)onKeyTouch:(id<NLKeyNote>)sender {
+    if ([_delegate respondsToSelector:@selector(keyboard:willInsertKey:)]) {
+        [_delegate keyboard:self willInsertKey:[sender keyValue]];
+    }
+    if ([_delegate inputSource]) {
+        id<UIKeyInput> inputObjcet = (id<UIKeyInput>)[_delegate inputSource];
+        [inputObjcet insertText:[sender keyValue]];
+    }
+}
+- (IBAction)onDelete:(id)sender {
+    if ([_delegate respondsToSelector:@selector(keyboardWillDeleteKey:)]) {
+        [_delegate keyboardWillDeleteKey:self];
+    }
+    if ([_delegate inputSource]) {
+        id<UIKeyInput> inputObjcet = (id<UIKeyInput>)[_delegate inputSource];
+        [inputObjcet deleteBackward];
+    }
+    
+}
+- (IBAction)onDone:(id)sender {
+    if ([_delegate respondsToSelector:@selector(keyboardWillDone:)]) {
+        [_delegate keyboardWillDone:self];
+    }
+    
+    if ([_delegate inputSource]) {
+        UIView *inputSource = [_delegate inputSource];
+        if ([inputSource isKindOfClass:[UITextField class]]) {
+            UITextField *textField = (UITextField *)inputSource;
+            if (textField.delegate && [textField.delegate respondsToSelector:@selector(keyboardWillDone:)]) {
+                BOOL ret = [textField.delegate textFieldShouldEndEditing:textField];
+                [textField endEditing:ret];
+            } else {
+                [textField resignFirstResponder];
+            }
+        } else if ([inputSource isKindOfClass:[UITextView class]]) {
+            UITextView *textView = (UITextView *)inputSource;
+            if (textView.delegate && [textView.delegate respondsToSelector:@selector(keyboardWillDone:)]) {
+                BOOL ret = [textView.delegate textViewShouldEndEditing:textView];
+                [textView endEditing:ret];
+            } else {
+                [textView resignFirstResponder];
+            }
+        } else if ([inputSource isKindOfClass:[UISearchBar class]]) {
+            UISearchBar *searchBar = (UISearchBar *)inputSource;
+            if (searchBar.delegate && [searchBar.delegate respondsToSelector:@selector(keyboardWillDone:)]) {
+                BOOL ret = [searchBar.delegate searchBarShouldEndEditing:searchBar];
+                [searchBar endEditing:ret];
+            } else {
+                [searchBar resignFirstResponder];
+            }
+        }
+    }
+}
+- (IBAction)onClear:(id)sender {
+    if ([_delegate respondsToSelector:@selector(keyboardWillClear:)]) {
+        [_delegate keyboardWillClear:self];
+    }
+    if ([_delegate inputSource]) {
+        UIView *inputSource = [_delegate inputSource];
+        if ([inputSource isKindOfClass:[UITextField class]]) {
+            UITextField *textField = (UITextField *)inputSource;
+            textField.text = nil;
+        } else if ([inputSource isKindOfClass:[UITextView class]]) {
+            UITextView *textView = (UITextView *)inputSource;
+            textView.text = nil;
+        } else if ([inputSource isKindOfClass:[UISearchBar class]]) {
+            UISearchBar *searchBar = (UISearchBar *)inputSource;
+            searchBar.text = nil;
+        }
+    }
+}
+
+#pragma mark -- Tool
 - (void)loadRandomItems {
     // M1: 保存键值，打乱items顺序，修改item的键值,
-//    NSMutableArray *orderValueItmes = [NSMutableArray arrayWithCapacity:_randomItems.count];
-//    [_randomItems enumerateObjectsUsingBlock:^(id<NLKeyNote> keyNote, NSUInteger idx, BOOL * _Nonnull stop) {
-//        [orderValueItmes addObject:[keyNote keyValue]];
-//    }];
-//    _randomItems = [_randomItems shuffled];
-//    [_randomItems enumerateObjectsUsingBlock:^(id<NLKeyNote> keyNote, NSUInteger idx, BOOL * _Nonnull stop) {
-//        if ([keyNote isKindOfClass:[UIButton class]]) {
-//            [(UIButton *)keyNote setTitle:orderValueItmes[idx] forState:UIControlStateNormal];
-//        } else if ([keyNote isKindOfClass:[UILabel class]]) {
-//            ((UILabel *)keyNote).text = orderValueItmes[idx];
-//        } else {
-//            
-//        }
-//    }];
+    //    NSMutableArray *orderValueItmes = [NSMutableArray arrayWithCapacity:_randomItems.count];
+    //    [_randomItems enumerateObjectsUsingBlock:^(id<NLKeyNote> keyNote, NSUInteger idx, BOOL * _Nonnull stop) {
+    //        [orderValueItmes addObject:[keyNote keyValue]];
+    //    }];
+    //    _randomItems = [_randomItems shuffled];
+    //    [_randomItems enumerateObjectsUsingBlock:^(id<NLKeyNote> keyNote, NSUInteger idx, BOOL * _Nonnull stop) {
+    //        if ([keyNote isKindOfClass:[UIButton class]]) {
+    //            [(UIButton *)keyNote setTitle:orderValueItmes[idx] forState:UIControlStateNormal];
+    //        } else if ([keyNote isKindOfClass:[UILabel class]]) {
+    //            ((UILabel *)keyNote).text = orderValueItmes[idx];
+    //        } else {
+    //
+    //        }
+    //    }];
     
     // 考虑到自定义ImageView为按键的情况，使用Method2.
     // M2: 保存frame值，打乱item，修改item的frame。要点，即使可以对randomItem进行深拷贝，但数组中的元素还是无法深拷贝，因而会出现bug。
@@ -61,44 +136,6 @@
         [keyNoteView setFrame:CGRectMake([xArray[idx] doubleValue], [yArray[idx] doubleValue], [widthArray[idx] doubleValue], [heightArray[idx] doubleValue])];
     }];
 }
-#pragma mark NLKeyboard
-- (void)keysRandomLayout {
-    [self loadRandomItems];
-}
-- (IBAction)onKeyTouch:(id<NLKeyNote>)sender {
-    if ([_delegate respondsToSelector:@selector(keyboard:willInsertKey:)]) {
-        [_delegate keyboard:self willInsertKey:[sender keyValue]];
-    }
-    if ([_delegate textField]) {
-        [[_delegate textField] insertText:[sender keyValue]];
-    }
-}
-- (IBAction)onDelete:(id)sender {
-    if ([_delegate respondsToSelector:@selector(keyboardWillDeleteKey:)]) {
-        [_delegate keyboardWillDeleteKey:self];
-    }
-    if ([_delegate textField]) {
-        NSString *originText = [_delegate textField].text;
-        [_delegate textField].text = [originText substringToIndex:originText.length - 1];
-    }
-    
-}
-- (IBAction)onDone:(id)sender {
-    if ([_delegate respondsToSelector:@selector(keyboardWillDone:)]) {
-        [_delegate keyboardWillDone:self];
-    }
-    if ([_delegate textField]) {
-        [[_delegate textField] resignFirstResponder];
-    }
-}
-- (IBAction)onClear:(id)sender {
-    if ([_delegate respondsToSelector:@selector(keyboardWillClear:)]) {
-        [_delegate keyboardWillClear:self];
-    }
-    if ([_delegate textField]) {
-        [_delegate textField].text = nil;
-    }
-}
 
 @end
 
@@ -121,9 +158,13 @@
     
     [self.inputView reloadInputViews];
 }
+
 @end
 
 @implementation UITextField(NLKeyboardDelegateImplement)
+- (UIView *)inputSource {
+    return self;
+}
 - (void)keyboard:(id<NLKeyboard>)keyboard willInsertKey:(NSString*)key {
     
 }
@@ -133,9 +174,32 @@
 - (void)keyboardWillDone:(id<NLKeyboard>)keyboard {
     
 }
-- (UITextField *)textField {
+@end
+
+@implementation UITextView (NLKeyboardExtension)
+- (void)setInputViewWithKeyboard:(id<NLKeyboard>)keyboard {
+    self.inputView = (UIView *)keyboard;
+    NLAbstractKeyboard *kb = (NLAbstractKeyboard *)keyboard;
+    kb.delegate = self;
+    
+    [self.inputView reloadInputViews];
+}
+- (UIView *)inputSource {
     return self;
 }
+@end
+@implementation UISearchBar (NLKeyboardExtension)
+- (void)setInputViewWithKeyboard:(id<NLKeyboard>)keyboard {
+    self.inputViewController.inputView = (UIInputView *)keyboard;
+    NLAbstractKeyboard *kb = (NLAbstractKeyboard *)keyboard;
+    kb.delegate = self;
+    
+    [self.inputView reloadInputViews];
+}
+- (UIView *)inputSource {
+    return self;
+}
+
 @end
 
 @implementation NSArray(Extension)
