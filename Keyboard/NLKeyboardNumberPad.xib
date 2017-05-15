@@ -173,16 +173,16 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outletCollection property="randomItems" destination="Tnc-7C-Eg4" id="zae-UL-1nn"/>
-                <outletCollection property="randomItems" destination="gHH-eI-cc2" id="ZVH-0c-vWs"/>
-                <outletCollection property="randomItems" destination="yPU-Pp-qkf" id="hmI-Do-unD"/>
-                <outletCollection property="randomItems" destination="oKX-El-WXY" id="eR7-dg-LNE"/>
-                <outletCollection property="randomItems" destination="KuS-3m-4Ae" id="Ugj-Ye-m1c"/>
-                <outletCollection property="randomItems" destination="5Od-ce-0FM" id="yXP-92-Qzj"/>
-                <outletCollection property="randomItems" destination="Itc-34-yjK" id="muH-42-YZu"/>
-                <outletCollection property="randomItems" destination="Nny-We-Rgi" id="BFo-lS-K2j"/>
-                <outletCollection property="randomItems" destination="gPc-vy-A5q" id="ZD8-WD-MAr"/>
-                <outletCollection property="randomItems" destination="0Kl-Je-j2p" id="UNz-2m-DoF"/>
+                <outletCollection property="randomItems" destination="0Kl-Je-j2p" id="cb8-rE-xHe"/>
+                <outletCollection property="randomItems" destination="Tnc-7C-Eg4" id="fMa-69-UnY"/>
+                <outletCollection property="randomItems" destination="gHH-eI-cc2" id="4Ef-yb-6wk"/>
+                <outletCollection property="randomItems" destination="yPU-Pp-qkf" id="cPv-Z3-mC3"/>
+                <outletCollection property="randomItems" destination="oKX-El-WXY" id="pt2-EF-nbk"/>
+                <outletCollection property="randomItems" destination="KuS-3m-4Ae" id="y5T-w3-yWw"/>
+                <outletCollection property="randomItems" destination="5Od-ce-0FM" id="TXK-4Y-o2T"/>
+                <outletCollection property="randomItems" destination="Itc-34-yjK" id="TZR-Am-owB"/>
+                <outletCollection property="randomItems" destination="Nny-We-Rgi" id="gPI-ZM-5NM"/>
+                <outletCollection property="randomItems" destination="gPc-vy-A5q" id="z4M-st-NzT"/>
             </connections>
             <point key="canvasLocation" x="368" y="167"/>
         </view>

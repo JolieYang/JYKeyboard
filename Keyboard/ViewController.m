@@ -25,10 +25,8 @@
     // Do any additional setup after loading the view, typically from a nib.
 //    id<NLKeyboard> keyboard = [NLKeyboardNumberPad standardKeyboard];
 //    [self.inputTF setInputViewWithKeyboard:keyboard];
-    NLKeyboardNumberPad *keyboard = [NLKeyboardNumberPad standardKeyboard];
-//    NLKeyboardNumberPad *keyboard = [NLKeyboardNumberPad securityKeyboard];
+    NLKeyboardNumberPad *keyboard = [NLKeyboardNumberPad standardShuffledKeyboard];
 //    [self.inputTF setInputViewWithKB: keyboard secure:NO];
-    id<NLKeyboardDelegate> tf = self.inputTF;
     [self.inputTF setInputViewWithKeyboard:keyboard];
     
     

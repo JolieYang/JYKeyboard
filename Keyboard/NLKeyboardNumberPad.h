@@ -17,4 +17,8 @@
  顺序数字键盘，按键有点击效果
  */
 + (id)standardKeyboard;
+/**
+ 随机数字键盘，按键有点击效果
+ */
++ (id)standardShuffledKeyboard;
 @end

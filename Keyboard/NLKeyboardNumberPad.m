@@ -9,14 +9,17 @@
 #import "NLKeyboardNumberPad.h"
 
 @implementation NLKeyboardNumberPad
-+ (id)securityKeyboard
-{
++ (id)securityKeyboard {
     return [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass(self) owner:self options:nil] firstObject];
 }
-+ (id)standardKeyboard
-{
++ (id)standardKeyboard {
     NLKeyboardNumberPad *keyboard = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass(self) owner:self options:nil] objectAtIndex:1];
     keyboard.randomItems = nil;
+    
+    return keyboard;
+}
++ (id)standardShuffledKeyboard {
+    NLKeyboardNumberPad *keyboard = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass(self) owner:self options:nil] objectAtIndex:0];
     
     return keyboard;
 }
