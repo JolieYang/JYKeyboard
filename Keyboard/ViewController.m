@@ -10,7 +10,7 @@
 #import "NLKeyboardNumberPad.h"
 #import "NLKeyboard.h"
 
-@interface ViewController ()
+@interface ViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *inputTF;
 @property (weak, nonatomic) IBOutlet UIButton *button;
 @property (weak, nonatomic) IBOutlet UILabel *label;
@@ -29,7 +29,8 @@
     NLKeyboardNumberPad *keyboard = [NLKeyboardNumberPad standardShuffledKeyboard];
 //    [self.inputTF setInputViewWithKB: keyboard secure:NO];
     [self.inputTF setInputViewWithKeyboard:keyboard];
-//    [self.textView setInputViewWithKeyboard:keyboard];
+    self.inputTF.delegate = self;
+    [self.textView setInputViewWithKeyboard:keyboard];
     
     
 //    self.sysKeyboard = [[UITextField alloc] initWithFrame:self.label.frame];
@@ -61,5 +62,16 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark UITextFieldDelegate
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    
+    return YES;
+}
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    
+}
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+    return YES;
+}
 
 @end

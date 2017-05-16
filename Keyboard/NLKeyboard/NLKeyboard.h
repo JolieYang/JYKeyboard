@@ -33,31 +33,35 @@
 @end
 
 @protocol NLKeyboardDelegate <NSObject>
+// ps: 无法共用同一个自定义keyboard
+- (UIView *)inputSource;
+@optional
 - (void)keyboard:(id<NLKeyboard>)keyboard willInsertKey:(NSString*)key;
 - (void)keyboardWillDeleteKey:(id<NLKeyboard>)keyboard;
 - (void)keyboardWillDone:(id<NLKeyboard>)keyboard;
-@optional
 - (void)keyboardWillClear:(id<NLKeyboard>)keyboard;
-// ps: 无法共用同一个自定义keyboard
-- (UIView *)inputSource;
 @end
 
+#pragma mark -- 按键
 @interface UILabel (NLKeyNote)<NLKeyNote>
 @end
 @interface UIButton (NLKeyNote)<NLKeyNote>
 @end
 
-@interface UITextField (NLkeyboardExtension)
-- (void)setInputViewWithKeyboard:(id<NLKeyboard>)keyboard;
-@end
-@interface UITextField (NLKeyboardDelegateImplement)<NLKeyboardDelegate>
+#pragma mark -- 自带输入源控件设置自定义键盘
+@interface UITextField (NLkeyboardExtension)<NLKeyboardDelegate,NLInputSource>
 @end
 
-@interface UITextView(NLKeyboardExtension)<NLInputSource>
-@end
-@interface UISearchBar(NLKeyboardExtension)<NLInputSource>
+@interface UITextView(NLKeyboardExtension)<NLKeyboardDelegate, NLInputSource>
 @end
 
+@interface UISearchBar(NLKeyboardExtension)<NLKeyboardDelegate, NLInputSource>
+@end
+
+#pragma mark -- 无输入源对象设置键盘
+
+
+#pragma mark -- Tool
 @interface NSArray(Extension)
 - (NSArray *)shuffled;// 返回随机后的数组
 @end

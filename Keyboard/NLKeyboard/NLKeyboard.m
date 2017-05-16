@@ -20,6 +20,11 @@
     }
 }
 
+#pragma mark NLKeyboardDelegate
+- (UIView *)inputSource {
+    return nil;
+}
+
 #pragma mark NLKeyboard Protocol
 - (void)keysRandomLayout {
     [self loadRandomItems];
@@ -158,23 +163,11 @@
     
     [self.inputView reloadInputViews];
 }
-
-@end
-
-@implementation UITextField(NLKeyboardDelegateImplement)
 - (UIView *)inputSource {
     return self;
 }
-- (void)keyboard:(id<NLKeyboard>)keyboard willInsertKey:(NSString*)key {
-    
-}
-- (void)keyboardWillDeleteKey:(id<NLKeyboard>)keyboard {
-    
-}
-- (void)keyboardWillDone:(id<NLKeyboard>)keyboard {
-    
-}
 @end
+
 
 @implementation UITextView (NLKeyboardExtension)
 - (void)setInputViewWithKeyboard:(id<NLKeyboard>)keyboard {
@@ -199,7 +192,6 @@
 - (UIView *)inputSource {
     return self;
 }
-
 @end
 
 @implementation NSArray(Extension)
