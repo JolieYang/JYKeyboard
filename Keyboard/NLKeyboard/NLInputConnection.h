@@ -12,15 +12,16 @@
 
 @protocol NLInputConnection
 @required
-- (NSString*)inputDisplayText;
+- (NSString*)inputText;
 @optional
 - (void)keyboard:(id<NLKeyboard>)keyboard textField:(UITextField*)textField doUpdateText:(NSString*)text;
 - (NSString*)inputInitText;
-- (NSString*)inputText;
+- (NSString*)inputDisplayText;
 @end
 
 @interface UIView (NLInputConnection)<UITextFieldDelegate, NLInputConnection>
 @property (nonatomic, retain, readonly) UITextField *associateKeyboardTextField;
+@property (nonatomic, assign) id<UITextFieldDelegate> textFieldDelegate;
 
 - (void)setInputViewWithTextField:(UITextField*)textField;
 - (void)setInputViewWithKeyboard:(id<NLKeyboard>)keyboard secureTextEntry:(BOOL)secureTextEntry delegate:(id<UITextFieldDelegate>)delegate;

@@ -35,11 +35,18 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eW4-MC-Vwa">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eW4-MC-Vwa">
                                 <rect key="frame" x="139" y="251" width="42" height="21"/>
-                                <color key="backgroundColor" red="0.99963909387588501" green="1" blue="0.99975615739822388" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.79537040000000003" green="0.49260812999999998" blue="0.26788461209999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.99963909390000005" green="1" blue="0.99975615740000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E4B-d6-rqh">
+                                <rect key="frame" x="139" y="290" width="42" height="21"/>
+                                <color key="backgroundColor" red="0.79537040000000003" green="0.49260812999999998" blue="0.26788461209999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.99963909390000005" green="1" blue="0.99975615740000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -49,13 +56,12 @@
                             <constraint firstItem="Lqk-oY-35z" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4dL-EE-vhz"/>
                             <constraint firstItem="98T-9T-AJG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="L6S-3f-MVu"/>
                             <constraint firstItem="98T-9T-AJG" firstAttribute="top" secondItem="Lqk-oY-35z" secondAttribute="bottom" constant="35" id="PHj-u7-djW"/>
-                            <constraint firstItem="eW4-MC-Vwa" firstAttribute="top" secondItem="98T-9T-AJG" secondAttribute="bottom" constant="111" id="aho-dq-5yM"/>
-                            <constraint firstItem="eW4-MC-Vwa" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="np2-Cg-U3a"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="button" destination="98T-9T-AJG" id="oAF-wk-W5F"/>
+                        <outlet property="customLabel" destination="E4B-d6-rqh" id="VT5-LC-jrt"/>
                         <outlet property="inputTF" destination="Lqk-oY-35z" id="fAP-C9-7yE"/>
                         <outlet property="label" destination="eW4-MC-Vwa" id="QaN-lE-Xax"/>
                         <outlet property="textView" destination="DCD-mW-zKQ" id="9qu-xi-CdG"/>
