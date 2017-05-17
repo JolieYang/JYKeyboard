@@ -28,9 +28,6 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="98T-9T-AJG">
                                 <rect key="frame" x="137" y="110" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="touchUpInsideButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IuU-xx-l3T"/>
-                                </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="hi" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="DCD-mW-zKQ">
                                 <rect key="frame" x="27" y="148" width="266" height="68"/>
@@ -66,7 +63,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="265" y="413"/>
+            <point key="canvasLocation" x="117" y="412"/>
         </scene>
     </scenes>
 </document>

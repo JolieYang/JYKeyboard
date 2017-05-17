@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "NLKeyboardNumberPad.h"
 #import "NLKeyboard.h"
+#import "NLInputConnection.h"
 
 @interface ViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *inputTF;
@@ -24,42 +25,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-//    id<NLKeyboard> keyboard = [NLKeyboardNumberPad standardKeyboard];
-//    [self.inputTF setInputViewWithKeyboard:keyboard];
+    // 1. 自定义键盘
     NLKeyboardNumberPad *keyboard = [NLKeyboardNumberPad standardShuffledKeyboard];
-//    [self.inputTF setInputViewWithKB: keyboard secure:NO];
     [self.inputTF setInputViewWithKeyboard:keyboard];
     self.inputTF.delegate = self;
-    [self.textView setInputViewWithKeyboard:keyboard];
+    
+    // 2.无输入源控件添加输入响应
+    UITextField *tf = [[UITextField alloc] init];
+//    tf.secureTextEntry = YES;
+    [self.label setInputViewWithTextField:tf];
+    NSLog(@"%@", self.label.associateKeyboardTextField);
     
     
-//    self.sysKeyboard = [[UITextField alloc] initWithFrame:self.label.frame];
-//    [self.sysKeyboard setFrame:CGRectMake(0, 0, self.label.frame.size.width, self.label.frame.size.height)];
-//    self.sysKeyboard.delegate = self;
-//    self.sysKeyboard.secureTextEntry = YES;
-//    self.label.userInteractionEnabled = YES;
-//    UITapGestureRecognizer *ges = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(test:)];
-//    [self.label addGestureRecognizer:ges];
-//    self.sysKeyboard.text = @"rose";
-//    [self.label addSubview:self.sysKeyboard];
-//    [self.label setInputViewWithTextField:sysKeyboard];
-    
-}
-- (void)test:(UITapGestureRecognizer *)recognizer {
-    self.label.text = nil;
-    UIView *view = recognizer.view;
-//    UITextField *tf = [[UITextField alloc] initWithFrame:view.frame];
-    [self.sysKeyboard setFrame:view.frame];
-    [self.sysKeyboard becomeFirstResponder];
-    self.label.text = self.sysKeyboard.text;
-}
-- (IBAction)touchUpInsideButton:(id)sender {
-    self.label.text = [NSString stringWithFormat:@"%@ : %@", self.button.titleLabel.text, self.button.currentTitle];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark UITextFieldDelegate

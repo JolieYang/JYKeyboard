@@ -25,15 +25,8 @@
 @property (nonatomic, assign) id<NLKeyboardDelegate> delegate;
 @end
 
-@protocol NLKeyNote <NSObject>
-- (NSString *)keyValue;
-@end
-@protocol NLInputSource <NSObject>
-- (void)setInputViewWithKeyboard:(id<NLKeyboard>)keyboard;
-@end
-
 @protocol NLKeyboardDelegate <NSObject>
-// ps: 无法共用同一个自定义keyboard
+// ps: 无法共用同一个自定义keyboard对象
 - (UIView *)inputSource;
 @optional
 - (void)keyboard:(id<NLKeyboard>)keyboard willInsertKey:(NSString*)key;
@@ -43,12 +36,19 @@
 @end
 
 #pragma mark -- 按键
+@protocol NLKeyNote <NSObject>
+- (NSString *)keyValue;
+@end
 @interface UILabel (NLKeyNote)<NLKeyNote>
 @end
 @interface UIButton (NLKeyNote)<NLKeyNote>
 @end
 
 #pragma mark -- 自带输入源控件设置自定义键盘
+@protocol NLInputSource <NSObject>
+- (void)setInputViewWithKeyboard:(id<NLKeyboard>)keyboard;
+@end
+
 @interface UITextField (NLkeyboardExtension)<NLKeyboardDelegate,NLInputSource>
 @end
 
