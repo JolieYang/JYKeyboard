@@ -1,16 +1,18 @@
 //
-//  NLKeyboard.m
+//  JYKeyboard.m
 //  Keyboard
 //
 //  Created by Jolie_Yang on 2017/5/12.
 //  Copyright © 2017年 Jolie_Yang. All rights reserved.
 //
 
-#import "NLKeyboard.h"
-@interface NLAbstractKeyboard()<NLKeyboardDelegate>
+#import "JYKeyboard.h"
+#import "JYViewInput.h"
+
+@interface JYAbstractKeyboard()<JYKeyboardDelegate>
 @end
 
-@implementation NLAbstractKeyboard
+@implementation JYAbstractKeyboard
 
 - (void)willMoveToWindow:(UIWindow *)newWindow {
     if (newWindow) {
@@ -20,16 +22,16 @@
     }
 }
 
-#pragma mark NLKeyboardDelegate
+#pragma mark JYKeyboardDelegate
 - (UIView *)inputSource {
     return nil;
 }
 
-#pragma mark NLKeyboard Protocol
+#pragma mark JYKeyboard Protocol
 - (void)keysRandomLayout {
     [self loadRandomItems];
 }
-- (IBAction)onKeyTouch:(id<NLKeyNote>)sender {
+- (IBAction)onKeyTouch:(id<JYKeyNote>)sender {
     if ([_delegate respondsToSelector:@selector(keyboard:willInsertKey:)]) {
         [_delegate keyboard:self willInsertKey:[sender keyValue]];
     }
@@ -105,11 +107,11 @@
 - (void)loadRandomItems {
     // M1: 保存键值，打乱items顺序，修改item的键值,
     //    NSMutableArray *orderValueItmes = [NSMutableArray arrayWithCapacity:_randomItems.count];
-    //    [_randomItems enumerateObjectsUsingBlock:^(id<NLKeyNote> keyNote, NSUInteger idx, BOOL * _Nonnull stop) {
+    //    [_randomItems enumerateObjectsUsingBlock:^(id<JYKeyNote> keyNote, NSUInteger idx, BOOL * _Nonnull stop) {
     //        [orderValueItmes addObject:[keyNote keyValue]];
     //    }];
     //    _randomItems = [_randomItems shuffled];
-    //    [_randomItems enumerateObjectsUsingBlock:^(id<NLKeyNote> keyNote, NSUInteger idx, BOOL * _Nonnull stop) {
+    //    [_randomItems enumerateObjectsUsingBlock:^(id<JYKeyNote> keyNote, NSUInteger idx, BOOL * _Nonnull stop) {
     //        if ([keyNote isKindOfClass:[UIButton class]]) {
     //            [(UIButton *)keyNote setTitle:orderValueItmes[idx] forState:UIControlStateNormal];
     //        } else if ([keyNote isKindOfClass:[UILabel class]]) {
@@ -125,7 +127,7 @@
     NSMutableArray *yArray = [NSMutableArray arrayWithCapacity:_randomItems.count];
     NSMutableArray *widthArray = [NSMutableArray arrayWithCapacity:_randomItems.count];
     NSMutableArray *heightArray = [NSMutableArray arrayWithCapacity:_randomItems.count];
-    [_randomItems enumerateObjectsUsingBlock:^(id<NLKeyNote> keyNote, NSUInteger idx, BOOL * _Nonnull stop) {
+    [_randomItems enumerateObjectsUsingBlock:^(id<JYKeyNote> keyNote, NSUInteger idx, BOOL * _Nonnull stop) {
         UIView *view = (UIView *)keyNote;
         CGPoint originPoint = view.frame.origin;
         CGSize originSize = view.frame.size;
@@ -144,56 +146,54 @@
 
 @end
 
-@implementation UILabel(NLKeyNote)
+@implementation UILabel(JYKeyNote)
 - (NSString *)keyValue {
     return self.text;
 }
 @end
-@implementation UIButton(NLKeyNote)
+@implementation UIButton(JYKeyNote)
 - (NSString *)keyValue {
     return self.titleLabel.text;
 }
 @end
 
-@implementation UITextField(NLkeyboardExtension)
-- (void)setInputViewWithKeyboard:(id<NLKeyboard>)keyboard {
+@implementation UITextField(JYkeyboardExtension)
+- (void)setInputViewWithKeyboard:(id<JYKeyboard>)keyboard {
     self.inputView = (UIView *)keyboard;
-    NLAbstractKeyboard *kb = (NLAbstractKeyboard *)keyboard;
+    JYAbstractKeyboard *kb = (JYAbstractKeyboard *)keyboard;
     kb.delegate = self;
     
     [self.inputView reloadInputViews];
 }
-- (UIView *)inputSource {
-    return self;
-}
 @end
 
-
-@implementation UITextView (NLKeyboardExtension)
-- (void)setInputViewWithKeyboard:(id<NLKeyboard>)keyboard {
+@implementation UITextView (JYKeyboardExtension)
+- (void)setInputViewWithKeyboard:(id<JYKeyboard>)keyboard {
     self.inputView = (UIView *)keyboard;
-    NLAbstractKeyboard *kb = (NLAbstractKeyboard *)keyboard;
+    JYAbstractKeyboard *kb = (JYAbstractKeyboard *)keyboard;
     kb.delegate = self;
     
     [self.inputView reloadInputViews];
 }
-- (UIView *)inputSource {
-    return self;
-}
 @end
-@implementation UISearchBar (NLKeyboardExtension)
-- (void)setInputViewWithKeyboard:(id<NLKeyboard>)keyboard {
+@implementation UISearchBar (JYKeyboardExtension)
+- (void)setInputViewWithKeyboard:(id<JYKeyboard>)keyboard {
     self.inputViewController.inputView = (UIInputView *)keyboard;
-    NLAbstractKeyboard *kb = (NLAbstractKeyboard *)keyboard;
+    JYAbstractKeyboard *kb = (JYAbstractKeyboard *)keyboard;
     kb.delegate = self;
     
     [self.inputView reloadInputViews];
+}
+@end
+#pragma mark -- 无输入源对象设置键盘
+@implementation UIView (JYKeyboardExtension)
+- (void)setInputViewWithKeyboard:(id<JYKeyboard>)keyboard {
+    [self setInputViewWithKeyboard:keyboard secureTextEntry:NO];
 }
 - (UIView *)inputSource {
     return self;
 }
 @end
-
 @implementation NSArray(Extension)
 - (NSArray *)shuffled {
     return [self sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {

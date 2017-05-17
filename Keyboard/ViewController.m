@@ -7,9 +7,9 @@
 //
 
 #import "ViewController.h"
-#import "NLKeyboardNumberPad.h"
-#import "NLKeyboard.h"
-#import "NLInputConnection.h"
+#import "AliKeyboard.h"
+#import "JYKeyboard.h"
+#import "JYViewInput.h"
 
 @interface ViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *inputTF;
@@ -27,7 +27,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     // 1. 自定义键盘
-    NLKeyboardNumberPad *keyboard = [NLKeyboardNumberPad standardShuffledKeyboard];
+    AliKeyboard *keyboard = [AliKeyboard standardShuffledKeyboard];
     self.inputTF.text = @"Rose";
     self.inputTF.secureTextEntry = YES;
     self.inputTF.delegate = self;
@@ -35,15 +35,15 @@
     
     // 2.无输入源控件添加输入响应--原生键盘
     UITextField *tf = [[UITextField alloc] init];
-    tf.secureTextEntry = YES;
+//    tf.secureTextEntry = YES;
     [self.label setInputViewWithTextField:tf];
-//    self.label.textFieldDelegate = self;
     NSLog(@"%@", self.label.associateKeyboardTextField);
     
     // 3.无输入源控件添加输入响应--自定义键盘
-    NLKeyboardNumberPad *kb = [NLKeyboardNumberPad standardKeyboard];
-    [self.customLabel setInputViewWithKeyboard:kb secureTextEntry:YES delegate:self];
+    AliKeyboard *kb = [AliKeyboard standardShuffledKeyboard];
+    [self.customLabel setInputViewWithKeyboard:kb secureTextEntry:YES];
     
+    [self.button setInputViewWithTextField:tf];
 }
 
 #pragma mark UITextFieldDelegate
@@ -58,4 +58,7 @@
     return YES;
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    return YES;
+}
 @end

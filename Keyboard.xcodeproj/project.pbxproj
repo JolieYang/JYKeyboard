@@ -7,36 +7,36 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A01FA5F71ECC3DAA002ED2D4 /* JYKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = A01FA5F41ECC3DAA002ED2D4 /* JYKeyboard.m */; };
+		A01FA5F81ECC3DAA002ED2D4 /* JYViewInput.m in Sources */ = {isa = PBXBuildFile; fileRef = A01FA5F61ECC3DAA002ED2D4 /* JYViewInput.m */; };
+		A01FA5FB1ECC3E68002ED2D4 /* AliKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = A01FA5FA1ECC3E68002ED2D4 /* AliKeyboard.m */; };
+		A01FA5FD1ECC3E8A002ED2D4 /* AliKeyboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = A01FA5FC1ECC3E8A002ED2D4 /* AliKeyboard.xib */; };
 		A02FFF4F1EC58E3F004A09AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A02FFF4C1EC58E3F004A09AC /* AppDelegate.m */; };
 		A02FFF501EC58E3F004A09AC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A02FFF4E1EC58E3F004A09AC /* ViewController.m */; };
-		A02FFF5B1EC59F5B004A09AC /* NLKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = A02FFF5A1EC59F5B004A09AC /* NLKeyboard.m */; };
-		A02FFF5E1EC5B336004A09AC /* NLInputConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = A02FFF5D1EC5B336004A09AC /* NLInputConnection.m */; };
 		A0B842651D3F6B27008636BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A0B842641D3F6B27008636BD /* main.m */; };
 		A0B8426E1D3F6B27008636BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0B8426C1D3F6B27008636BD /* Main.storyboard */; };
 		A0B842701D3F6B27008636BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0B8426F1D3F6B27008636BD /* Assets.xcassets */; };
 		A0B842731D3F6B27008636BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0B842711D3F6B27008636BD /* LaunchScreen.storyboard */; };
-		A0B842811D3F7D42008636BD /* NLKeyboardNumberPad.m in Sources */ = {isa = PBXBuildFile; fileRef = A0B8427F1D3F7D42008636BD /* NLKeyboardNumberPad.m */; };
-		A0B842821D3F7D42008636BD /* NLKeyboardNumberPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0B842801D3F7D42008636BD /* NLKeyboardNumberPad.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A01FA5F31ECC3DAA002ED2D4 /* JYKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYKeyboard.h; sourceTree = "<group>"; };
+		A01FA5F41ECC3DAA002ED2D4 /* JYKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYKeyboard.m; sourceTree = "<group>"; };
+		A01FA5F51ECC3DAA002ED2D4 /* JYViewInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYViewInput.h; sourceTree = "<group>"; };
+		A01FA5F61ECC3DAA002ED2D4 /* JYViewInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYViewInput.m; sourceTree = "<group>"; };
+		A01FA5F91ECC3E68002ED2D4 /* AliKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliKeyboard.h; sourceTree = "<group>"; };
+		A01FA5FA1ECC3E68002ED2D4 /* AliKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AliKeyboard.m; sourceTree = "<group>"; };
+		A01FA5FC1ECC3E8A002ED2D4 /* AliKeyboard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AliKeyboard.xib; sourceTree = "<group>"; };
 		A02FFF4B1EC58E3F004A09AC /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A02FFF4C1EC58E3F004A09AC /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		A02FFF4D1EC58E3F004A09AC /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		A02FFF4E1EC58E3F004A09AC /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		A02FFF591EC59F5B004A09AC /* NLKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NLKeyboard.h; sourceTree = "<group>"; };
-		A02FFF5A1EC59F5B004A09AC /* NLKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NLKeyboard.m; sourceTree = "<group>"; };
-		A02FFF5C1EC5B336004A09AC /* NLInputConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NLInputConnection.h; sourceTree = "<group>"; };
-		A02FFF5D1EC5B336004A09AC /* NLInputConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NLInputConnection.m; sourceTree = "<group>"; };
 		A0B842601D3F6B27008636BD /* Keyboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Keyboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0B842641D3F6B27008636BD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A0B8426D1D3F6B27008636BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A0B8426F1D3F6B27008636BD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A0B842721D3F6B27008636BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A0B842741D3F6B27008636BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A0B8427E1D3F7D42008636BD /* NLKeyboardNumberPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NLKeyboardNumberPad.h; sourceTree = "<group>"; };
-		A0B8427F1D3F7D42008636BD /* NLKeyboardNumberPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NLKeyboardNumberPad.m; sourceTree = "<group>"; };
-		A0B842801D3F7D42008636BD /* NLKeyboardNumberPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NLKeyboardNumberPad.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,15 +50,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A02FFF581EC59F03004A09AC /* NLKeyboard */ = {
+		A01FA5F21ECC3DAA002ED2D4 /* JYKeyboard */ = {
 			isa = PBXGroup;
 			children = (
-				A02FFF591EC59F5B004A09AC /* NLKeyboard.h */,
-				A02FFF5A1EC59F5B004A09AC /* NLKeyboard.m */,
-				A02FFF5C1EC5B336004A09AC /* NLInputConnection.h */,
-				A02FFF5D1EC5B336004A09AC /* NLInputConnection.m */,
+				A01FA5F31ECC3DAA002ED2D4 /* JYKeyboard.h */,
+				A01FA5F41ECC3DAA002ED2D4 /* JYKeyboard.m */,
+				A01FA5F51ECC3DAA002ED2D4 /* JYViewInput.h */,
+				A01FA5F61ECC3DAA002ED2D4 /* JYViewInput.m */,
 			);
-			path = NLKeyboard;
+			path = JYKeyboard;
 			sourceTree = "<group>";
 		};
 		A0B842571D3F6B27008636BD = {
@@ -80,14 +80,14 @@
 		A0B842621D3F6B27008636BD /* Keyboard */ = {
 			isa = PBXGroup;
 			children = (
-				A02FFF581EC59F03004A09AC /* NLKeyboard */,
+				A01FA5F21ECC3DAA002ED2D4 /* JYKeyboard */,
 				A02FFF4B1EC58E3F004A09AC /* AppDelegate.h */,
 				A02FFF4C1EC58E3F004A09AC /* AppDelegate.m */,
+				A01FA5F91ECC3E68002ED2D4 /* AliKeyboard.h */,
+				A01FA5FA1ECC3E68002ED2D4 /* AliKeyboard.m */,
+				A01FA5FC1ECC3E8A002ED2D4 /* AliKeyboard.xib */,
 				A02FFF4D1EC58E3F004A09AC /* ViewController.h */,
 				A02FFF4E1EC58E3F004A09AC /* ViewController.m */,
-				A0B8427E1D3F7D42008636BD /* NLKeyboardNumberPad.h */,
-				A0B8427F1D3F7D42008636BD /* NLKeyboardNumberPad.m */,
-				A0B842801D3F7D42008636BD /* NLKeyboardNumberPad.xib */,
 				A0B8426C1D3F6B27008636BD /* Main.storyboard */,
 				A0B8426F1D3F6B27008636BD /* Assets.xcassets */,
 				A0B842711D3F6B27008636BD /* LaunchScreen.storyboard */,
@@ -163,9 +163,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0B842731D3F6B27008636BD /* LaunchScreen.storyboard in Resources */,
-				A0B842821D3F7D42008636BD /* NLKeyboardNumberPad.xib in Resources */,
 				A0B842701D3F6B27008636BD /* Assets.xcassets in Resources */,
 				A0B8426E1D3F6B27008636BD /* Main.storyboard in Resources */,
+				A01FA5FD1ECC3E8A002ED2D4 /* AliKeyboard.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,12 +176,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A02FFF5E1EC5B336004A09AC /* NLInputConnection.m in Sources */,
+				A01FA5F81ECC3DAA002ED2D4 /* JYViewInput.m in Sources */,
 				A02FFF501EC58E3F004A09AC /* ViewController.m in Sources */,
 				A0B842651D3F6B27008636BD /* main.m in Sources */,
-				A0B842811D3F7D42008636BD /* NLKeyboardNumberPad.m in Sources */,
 				A02FFF4F1EC58E3F004A09AC /* AppDelegate.m in Sources */,
-				A02FFF5B1EC59F5B004A09AC /* NLKeyboard.m in Sources */,
+				A01FA5F71ECC3DAA002ED2D4 /* JYKeyboard.m in Sources */,
+				A01FA5FB1ECC3E68002ED2D4 /* AliKeyboard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
