@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @protocol JYKeyboard;
+@class JYKeyboardConfig;
+
+typedef void(^JYViewInputSystemKeyboardConfigBlock)(JYKeyboardConfig *config);
 
 @protocol JYViewInput
 @required
@@ -19,14 +22,22 @@
 - (NSString*)inputDisplayText;
 @end
 
+// TODO
 @protocol UIViewInputDelegate <NSObject>
-
+@optional
+- (void)inputSource:(UIView *)inputSource shouldChangeCharactersInRange:(NSRange *)range replacementString:(NSString *)string;
+- (void)inputSource:(UIView *)inputSourece didChangeText:(NSString *)text;
+- (BOOL)inputSourceShouldClear:(UIView *)inputSource;
+- (BOOL)inputSourceShouldReturn:(UIView *)inputSource;
 @end
 
 @interface UIView (JYViewInput)<UITextFieldDelegate, JYViewInput>
 @property (nonatomic, retain, readonly) UITextField *associateKeyboardTextField;
-@property (nonatomic, assign) id<UIViewInputDelegate> delegate;
+@property (nonatomic, assign) id<UIViewInputDelegate> inputDelegate;
 
-- (void)setInputViewWithTextField:(UITextField*)textField;// TODO --> setInputViewWithOriginKB
+- (void)setSystemKeyboardWithConfigBlock:(JYViewInputSystemKeyboardConfigBlock)configBlock;
 - (void)setInputViewWithKeyboard:(id<JYKeyboard>)keyboard secureTextEntry:(BOOL)secureTextEntry;
+@end
+
+@interface JYKeyboardConfig : NSObject<UITextInputTraits>
 @end

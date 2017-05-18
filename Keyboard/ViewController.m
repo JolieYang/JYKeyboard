@@ -29,21 +29,20 @@
     // 1. 自定义键盘
     AliKeyboard *keyboard = [AliKeyboard standardShuffledKeyboard];
     self.inputTF.text = @"Rose";
-    self.inputTF.secureTextEntry = YES;
     self.inputTF.delegate = self;
     [self.inputTF setInputViewWithKeyboard:keyboard];
     
     // 2.无输入源控件添加输入响应--原生键盘
-    UITextField *tf = [[UITextField alloc] init];
-//    tf.secureTextEntry = YES;
-    [self.label setInputViewWithTextField:tf];
-    NSLog(@"%@", self.label.associateKeyboardTextField);
+    [self.label setSystemKeyboardWithConfigBlock:^(JYKeyboardConfig *config) {
+        config.keyboardType = UIKeyboardTypeNumberPad;
+    }];
     
     // 3.无输入源控件添加输入响应--自定义键盘
     AliKeyboard *kb = [AliKeyboard standardShuffledKeyboard];
     [self.customLabel setInputViewWithKeyboard:kb secureTextEntry:YES];
     
-    [self.button setInputViewWithTextField:tf];
+//    UITextField *tf = [[UITextField alloc] init];
+//    [self.button setInputViewWithTextField:tf];
 }
 
 #pragma mark UITextFieldDelegate

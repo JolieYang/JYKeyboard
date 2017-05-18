@@ -105,24 +105,8 @@
 
 #pragma mark -- Tool
 - (void)loadRandomItems {
-    // M1: 保存键值，打乱items顺序，修改item的键值,
-    //    NSMutableArray *orderValueItmes = [NSMutableArray arrayWithCapacity:_randomItems.count];
-    //    [_randomItems enumerateObjectsUsingBlock:^(id<JYKeyNote> keyNote, NSUInteger idx, BOOL * _Nonnull stop) {
-    //        [orderValueItmes addObject:[keyNote keyValue]];
-    //    }];
-    //    _randomItems = [_randomItems shuffled];
-    //    [_randomItems enumerateObjectsUsingBlock:^(id<JYKeyNote> keyNote, NSUInteger idx, BOOL * _Nonnull stop) {
-    //        if ([keyNote isKindOfClass:[UIButton class]]) {
-    //            [(UIButton *)keyNote setTitle:orderValueItmes[idx] forState:UIControlStateNormal];
-    //        } else if ([keyNote isKindOfClass:[UILabel class]]) {
-    //            ((UILabel *)keyNote).text = orderValueItmes[idx];
-    //        } else {
-    //
-    //        }
-    //    }];
-    
     // 考虑到自定义ImageView为按键的情况，使用Method2.
-    // M2: 保存frame值，打乱item，修改item的frame。要点，即使可以对randomItem进行深拷贝，但数组中的元素还是无法深拷贝，因而会出现bug。
+    // 保存frame值，打乱item，修改item的frame。要点，即使可以对randomItem进行深拷贝，但数组中的元素还是无法深拷贝，因而会出现bug。
     NSMutableArray *xArray = [NSMutableArray arrayWithCapacity:_randomItems.count];
     NSMutableArray *yArray = [NSMutableArray arrayWithCapacity:_randomItems.count];
     NSMutableArray *widthArray = [NSMutableArray arrayWithCapacity:_randomItems.count];

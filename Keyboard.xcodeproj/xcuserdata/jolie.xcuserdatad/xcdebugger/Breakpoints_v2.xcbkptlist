@@ -121,29 +121,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Keyboard/JYKeyboard/JYKeyboard.m"
-            timestampString = "516702483.496018"
+            filePath = "Keyboard/JYKeyboard/JYViewInput.m"
+            timestampString = "516779793.553592"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
-            landmarkName = "-onKeyTouch:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Keyboard/JYKeyboard/JYKeyboard.m"
-            timestampString = "516702553.987678"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
-            landmarkName = "-onDone:"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
+            landmarkName = "-dismissKB"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

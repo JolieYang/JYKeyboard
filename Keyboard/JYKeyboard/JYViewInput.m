@@ -13,15 +13,45 @@
 @implementation UIView(JYViewInput)
 static NSString *secureText = @"●";
 static void *associateKeyboardTextFieldKey = &associateKeyboardTextFieldKey;
-static void *delegateKey = &delegateKey;
+static void *inputDelegateKey = &inputDelegateKey;
 
-- (void)setInputViewWithTextField:(UITextField*)textField {
-    textField.hidden = YES;
-    [self addSubview:textField];
-    self.associateKeyboardTextField = textField;
+- (void)setSystemKeyboardWithConfigBlock:(JYViewInputSystemKeyboardConfigBlock)configBlock {
+    JYKeyboardConfig *kbConfig = [JYKeyboardConfig new];
+    !kbConfig?:configBlock(kbConfig);
+    [self setSystemKeyboardWithConfigObject: kbConfig];
+}
+
+- (void)setSystemKeyboardWithConfigObject:(JYKeyboardConfig *)config {
+    [self commitInit];
+    [self configTextField:self.associateKeyboardTextField configer:config];
+}
+
+
+- (void)setInputViewWithKeyboard:(id<JYKeyboard>)keyboard secureTextEntry:(BOOL)secureTextEntry {
+//    UITextField *tf = [UITextField new];
+//    [self addSubview:tf];
+//    self.associateKeyboardTextField = tf;
+//    
+//    self.associateKeyboardTextField.secureTextEntry = secureTextEntry;
+//    self.associateKeyboardTextField.text = [self inputInitText];
+//    [self inputDisplayText];
+//    
+//    [self addTapGesture];
     
-    self.associateKeyboardTextField.returnKeyType = UIReturnKeyDone;
-    self.associateKeyboardTextField.enablesReturnKeyAutomatically = YES;
+    [self commitInit];
+    self.associateKeyboardTextField.secureTextEntry = secureTextEntry;
+    
+    [self.associateKeyboardTextField setInputViewWithKeyboard:keyboard];
+}
+
+
+
+- (void)commitInit {
+    UITextField *tf = [UITextField new];
+    tf.hidden = YES;
+    [self addSubview:tf];
+    self.associateKeyboardTextField = tf;
+    
     if ([self inputInitText]) {
         self.associateKeyboardTextField.text = [self inputInitText];
     } else {
@@ -38,32 +68,12 @@ static void *delegateKey = &delegateKey;
     
     [self addTapGesture];
 }
-
-- (void)ShowText {
-    
-}
-
-
-- (void)setInputViewWithKeyboard:(id<JYKeyboard>)keyboard secureTextEntry:(BOOL)secureTextEntry {
-    UITextField *tf = [UITextField new];
-    [self addSubview:tf];
-    self.associateKeyboardTextField = tf;
-    
-    self.associateKeyboardTextField.secureTextEntry = secureTextEntry;
-    self.associateKeyboardTextField.text = [self inputInitText];
-    [self inputDisplayText];
-    [self.associateKeyboardTextField setInputViewWithKeyboard:keyboard];
-    
-    [self addTapGesture];
-}
-
 - (void)addTapGesture {
     self.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] init];
     [tap addTarget:self action:@selector(tapGesture)];
     [self addGestureRecognizer:tap];
 }
-
 #pragma mark Action
 - (void)tapGesture {
     [self.associateKeyboardTextField becomeFirstResponder];
@@ -87,8 +97,8 @@ static void *delegateKey = &delegateKey;
 
 - (void)dismissKB {
     [self.associateKeyboardTextField resignFirstResponder];
-    [self.associateKeyboardTextField removeFromSuperview];
-    self.associateKeyboardTextField = nil;
+//    [self.associateKeyboardTextField removeFromSuperview];
+//    self.associateKeyboardTextField = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -121,6 +131,21 @@ static void *delegateKey = &delegateKey;
     
     return displayText;
 }
+
+#pragma mark -- Tool
+- (void)configTextField:(UITextField *)tf configer:(JYKeyboardConfig *)config {
+    if (config) {
+        tf.autocapitalizationType = !(config.autocapitalizationType==UITextAutocapitalizationTypeNone)?:config.autocapitalizationType;
+        tf.autocorrectionType = !(config.autocorrectionType==UITextAutocorrectionTypeDefault)?:config.autocorrectionType;
+        tf.spellCheckingType = !(config.spellCheckingType==UITextSpellCheckingTypeDefault)?:config.spellCheckingType;
+        tf.keyboardType = !(config.keyboardType==UIKeyboardTypeDefault)?:config.keyboardType;
+        tf.keyboardAppearance = !(config.keyboardAppearance==UIKeyboardAppearanceDefault)?:config.keyboardAppearance;
+        tf.returnKeyType = !(config.returnKeyType==UIReturnKeyDefault)?:config.returnKeyType;
+        tf.enablesReturnKeyAutomatically = config.enablesReturnKeyAutomatically;
+        tf.secureTextEntry = config.isSecureTextEntry;
+    }
+}
+
 #pragma mark -- Runtime Getter/Setter
 - (void)setAssociateKeyboardTextField:(UITextField *)associateKeyboardTextField {
     return objc_setAssociatedObject(self, &associateKeyboardTextFieldKey, associateKeyboardTextField, OBJC_ASSOCIATION_RETAIN);
@@ -129,12 +154,27 @@ static void *delegateKey = &delegateKey;
     return objc_getAssociatedObject(self, &associateKeyboardTextFieldKey);
 }
 
-- (void)setDelegate:(id<UIViewInputDelegate>)delegate {
-    return objc_setAssociatedObject(self, &delegateKey, delegate, OBJC_ASSOCIATION_ASSIGN);
+- (void)setInputDelegate:(id<UIViewInputDelegate>)inputDelegate {
+    return objc_setAssociatedObject(self, inputDelegateKey, inputDelegate, OBJC_ASSOCIATION_ASSIGN);
 }
-
-- (id<UIViewInputDelegate>)delegate {
-    return objc_getAssociatedObject(self, &delegateKey);
+- (id<UIViewInputDelegate>)inputDelegate {
+    return objc_getAssociatedObject(self, inputDelegateKey);
 }
+@end
 
+@implementation JYKeyboardConfig
+@synthesize autocapitalizationType;
+@synthesize autocorrectionType;
+@synthesize spellCheckingType;
+@synthesize keyboardType;
+@synthesize keyboardAppearance;
+@synthesize returnKeyType;
+@synthesize enablesReturnKeyAutomatically;
+@synthesize secureTextEntry;
+
+- (instancetype)init {
+    if (self = [super init]) {
+    }
+    return self;
+}
 @end
