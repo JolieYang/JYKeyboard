@@ -17,57 +17,48 @@ static void *inputDelegateKey = &inputDelegateKey;
 
 - (void)setSystemKeyboardWithConfigBlock:(JYViewInputSystemKeyboardConfigBlock)configBlock {
     JYKeyboardConfig *kbConfig = [JYKeyboardConfig new];
-    !kbConfig?:configBlock(kbConfig);
+    !configBlock?:configBlock(kbConfig);
     [self setSystemKeyboardWithConfigObject: kbConfig];
 }
 
 - (void)setSystemKeyboardWithConfigObject:(JYKeyboardConfig *)config {
     [self commitInit];
     [self configTextField:self.associateKeyboardTextField configer:config];
+    
+    // 键盘配置之后再执行文本更新
+    [self updateDisplayText];
 }
 
 
-- (void)setInputViewWithKeyboard:(id<JYKeyboard>)keyboard secureTextEntry:(BOOL)secureTextEntry {
-//    UITextField *tf = [UITextField new];
-//    [self addSubview:tf];
-//    self.associateKeyboardTextField = tf;
-//    
-//    self.associateKeyboardTextField.secureTextEntry = secureTextEntry;
-//    self.associateKeyboardTextField.text = [self inputInitText];
-//    [self inputDisplayText];
-//    
-//    [self addTapGesture];
-    
+- (void)setCustomKeyboard:(id<JYKeyboard>)keyboard secureTextEntry:(BOOL)secureTextEntry {
     [self commitInit];
     self.associateKeyboardTextField.secureTextEntry = secureTextEntry;
+    [self.associateKeyboardTextField setCustomKeyboard:keyboard];
     
-    [self.associateKeyboardTextField setInputViewWithKeyboard:keyboard];
+    // 键盘配置之后再执行文本更新
+    [self updateDisplayText];
 }
 
-
-
 - (void)commitInit {
+    NSAssert(![self systemCanInputSource], @"Only Support to Can't Input Control");
     UITextField *tf = [UITextField new];
+    tf.delegate = self;
     tf.hidden = YES;
     [self addSubview:tf];
     self.associateKeyboardTextField = tf;
     
-    if ([self inputInitText]) {
-        self.associateKeyboardTextField.text = [self inputInitText];
-    } else {
-        if ([self isKindOfClass:[UILabel class]]) {
-            UILabel *label = (UILabel *)self;
-            self.associateKeyboardTextField.text = label.text;
-        } else if ([self isKindOfClass:[UIButton class]]) {
-            UIButton *button = (UIButton *)self;
-            self.associateKeyboardTextField.text = button.titleLabel.text;
-        }
+    // 目前只支持UILabel,UIButton的默认赋值
+    if ([self isKindOfClass:[UILabel class]]) {
+        UILabel *label = (UILabel *)self;
+        self.associateKeyboardTextField.text = label.text;
+    } else if ([self isKindOfClass:[UIButton class]]) {
+        UIButton *button = (UIButton *)self;
+        self.associateKeyboardTextField.text = button.titleLabel.text;
     }
-    // 执行文本更新
-    [self inputDisplayText];
     
     [self addTapGesture];
 }
+
 - (void)addTapGesture {
     self.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] init];
@@ -87,52 +78,37 @@ static void *inputDelegateKey = &inputDelegateKey;
                                                       object:nil
                                                        queue:nil
                                                   usingBlock:^(NSNotification * _Nonnull note) {
-                                                      [self inputText];
-                                                      [self inputDisplayText];
-                                                      if ([self respondsToSelector:@selector(keyboard:textField:doUpdateText:)]) {
-                                                          [self keyboard:(id<JYKeyboard>)self.associateKeyboardTextField.inputView textField:self.associateKeyboardTextField doUpdateText:[self inputDisplayText]];
+                                                      if ([self.inputDelegate respondsToSelector:@selector(inputSource:didChangeText:)]) {
+                                                          [self.inputDelegate inputSource:self didChangeText:self.associateKeyboardTextField.text];
                                                       }
+                                                      [self updateDisplayText];
                                                   }];
 }
 
-- (void)dismissKB {
-    [self.associateKeyboardTextField resignFirstResponder];
-//    [self.associateKeyboardTextField removeFromSuperview];
-//    self.associateKeyboardTextField = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+#pragma mark -- UITextFieldDelegate
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if ([self.inputDelegate respondsToSelector:@selector(inputSource:shouldChangeCharactersInRange:replacementString:)]) {
+        return [self.inputDelegate inputSource:self shouldChangeCharactersInRange:range replacementString:string];
+    } else {
+        return YES;
+    }
+}
+- (BOOL)textFieldShouldClear:(UITextField *)textField {
+    if ([self.inputDelegate respondsToSelector:@selector(inputSourceShouldClear:)]) {
+        return [self.inputDelegate inputSourceShouldClear:self];
+    } else {
+        return YES;
+    }
+}
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if ([self.inputDelegate respondsToSelector:@selector(inputSourceShouldReturn:)]) {
+        return [self.inputDelegate inputSourceShouldReturn:self];
+    } else {
+        return YES;
+    }
 }
 
-#pragma mark -- JYViewInput
-- (NSString*)inputText {
-    return self.associateKeyboardTextField.text;
-}
-- (NSString*)inputInitText {
-    return nil;
-}
-- (NSString*)inputDisplayText {
-    NSString *displayText = [[NSString alloc] init];
-    if (self.associateKeyboardTextField.secureTextEntry) {
-        for (int i = 0; i < self.associateKeyboardTextField.text.length; i++) {
-            displayText = [displayText stringByAppendingString:secureText];
-        }
-    } else {
-        displayText = [self.associateKeyboardTextField.text copy];
-    }
-    
-    if ([self isKindOfClass:[UILabel class]]) {
-        UILabel *label = (UILabel *)self;
-        label.text = displayText;
-    } else if ([self isKindOfClass:[UIButton class]]) {
-        UIButton *button = (UIButton *)self;
-        [button setTitle:displayText forState:UIControlStateNormal];
-    } else {
-        
-    }
-    
-    return displayText;
-}
-
-#pragma mark -- Tool
+#pragma mark -- SetUp
 - (void)configTextField:(UITextField *)tf configer:(JYKeyboardConfig *)config {
     if (config) {
         tf.autocapitalizationType = !(config.autocapitalizationType==UITextAutocapitalizationTypeNone)?:config.autocapitalizationType;
@@ -146,6 +122,47 @@ static void *inputDelegateKey = &inputDelegateKey;
     }
 }
 
+- (void)dismissKB {
+    [self.associateKeyboardTextField resignFirstResponder];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)updateDisplayText {
+    if ([self.inputDelegate respondsToSelector:@selector(inputSource:updateDisplayText:)]) {
+        [self.inputDelegate inputSource:self updateDisplayText:[self inputDisplayText]];
+    } else {
+        [self defaultUpdateDisplayText];
+    }
+}
+
+// 目前仅支持UILabel,UIButton默认显示
+- (void)defaultUpdateDisplayText {
+    NSString *displayText = [self inputDisplayText];
+    
+    if ([self isKindOfClass:[UILabel class]]) {
+        UILabel *label = (UILabel *)self;
+        label.text = displayText;
+    } else if ([self isKindOfClass:[UIButton class]]) {
+        UIButton *button = (UIButton *)self;
+        [button setTitle:displayText forState:UIControlStateNormal];
+    } else {
+        
+    }
+}
+
+- (NSString*)inputDisplayText {
+    NSString *displayText = [[NSString alloc] init];
+    if (self.associateKeyboardTextField.secureTextEntry) {
+        for (int i = 0; i < self.associateKeyboardTextField.text.length; i++) {
+            displayText = [displayText stringByAppendingString:secureText];
+        }
+    } else {
+        displayText = [self.associateKeyboardTextField.text copy];
+    }
+    
+    return displayText;
+}
+
 #pragma mark -- Runtime Getter/Setter
 - (void)setAssociateKeyboardTextField:(UITextField *)associateKeyboardTextField {
     return objc_setAssociatedObject(self, &associateKeyboardTextFieldKey, associateKeyboardTextField, OBJC_ASSOCIATION_RETAIN);
@@ -155,6 +172,11 @@ static void *inputDelegateKey = &inputDelegateKey;
 }
 
 - (void)setInputDelegate:(id<UIViewInputDelegate>)inputDelegate {
+    // 设置初始文本
+    if ([inputDelegate respondsToSelector:@selector(inputSourceDefaultText:)]) {
+        self.associateKeyboardTextField.text = [inputDelegate inputSourceDefaultText:self];
+        [self updateDisplayText];
+    }
     return objc_setAssociatedObject(self, inputDelegateKey, inputDelegate, OBJC_ASSOCIATION_ASSIGN);
 }
 - (id<UIViewInputDelegate>)inputDelegate {

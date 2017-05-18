@@ -27,9 +27,9 @@
 @end
 
 @protocol JYKeyboardDelegate <NSObject>
+- (UIView *)inputSource;
 @optional
 // ps: 无法共用同一个自定义keyboard对象
-- (UIView *)inputSource;
 - (void)keyboard:(id<JYKeyboard>)keyboard willInsertKey:(NSString*)key;
 - (void)keyboardWillDeleteKey:(id<JYKeyboard>)keyboard;
 - (void)keyboardWillDone:(id<JYKeyboard>)keyboard;
@@ -45,22 +45,13 @@
 @interface UIButton (JYKeyNote)<JYKeyNote>
 @end
 
-#pragma mark -- 自带输入源控件设置自定义键盘
 @protocol JYInputSource <NSObject>
-- (void)setInputViewWithKeyboard:(id<JYKeyboard>)keyboard;
+- (void)setCustomKeyboard:(id<JYKeyboard>)keyboard;
+- (BOOL)systemCanInputSource;
 @end
 
-@interface UITextField (JYkeyboardExtension)<JYKeyboardDelegate,JYInputSource>
-@end
-
-@interface UITextView(JYKeyboardExtension)<JYKeyboardDelegate, JYInputSource>
-@end
-
-@interface UISearchBar(JYKeyboardExtension)<JYKeyboardDelegate, JYInputSource>
-@end
-
-#pragma mark -- 无输入源对象设置键盘
-@interface UIView (JYKeyboardExtension)<JYInputSource>
+#pragma mark -- 自带输入源控件&&无输入源对象设置键盘
+@interface UIView (JYKeyboardExtension)<JYInputSource,JYKeyboardDelegate>
 @end
 
 #pragma mark -- Tool

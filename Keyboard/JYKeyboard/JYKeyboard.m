@@ -22,11 +22,6 @@
     }
 }
 
-#pragma mark JYKeyboardDelegate
-- (UIView *)inputSource {
-    return nil;
-}
-
 #pragma mark JYKeyboard Protocol
 - (void)keysRandomLayout {
     [self loadRandomItems];
@@ -105,7 +100,6 @@
 
 #pragma mark -- Tool
 - (void)loadRandomItems {
-    // 考虑到自定义ImageView为按键的情况，使用Method2.
     // 保存frame值，打乱item，修改item的frame。要点，即使可以对randomItem进行深拷贝，但数组中的元素还是无法深拷贝，因而会出现bug。
     NSMutableArray *xArray = [NSMutableArray arrayWithCapacity:_randomItems.count];
     NSMutableArray *yArray = [NSMutableArray arrayWithCapacity:_randomItems.count];
@@ -140,42 +134,36 @@
     return self.titleLabel.text;
 }
 @end
-
-@implementation UITextField(JYkeyboardExtension)
-- (void)setInputViewWithKeyboard:(id<JYKeyboard>)keyboard {
-    self.inputView = (UIView *)keyboard;
-    JYAbstractKeyboard *kb = (JYAbstractKeyboard *)keyboard;
-    kb.delegate = self;
-    
-    [self.inputView reloadInputViews];
-}
-@end
-
-@implementation UITextView (JYKeyboardExtension)
-- (void)setInputViewWithKeyboard:(id<JYKeyboard>)keyboard {
-    self.inputView = (UIView *)keyboard;
-    JYAbstractKeyboard *kb = (JYAbstractKeyboard *)keyboard;
-    kb.delegate = self;
-    
-    [self.inputView reloadInputViews];
-}
-@end
-@implementation UISearchBar (JYKeyboardExtension)
-- (void)setInputViewWithKeyboard:(id<JYKeyboard>)keyboard {
-    self.inputViewController.inputView = (UIInputView *)keyboard;
-    JYAbstractKeyboard *kb = (JYAbstractKeyboard *)keyboard;
-    kb.delegate = self;
-    
-    [self.inputView reloadInputViews];
-}
-@end
-#pragma mark -- 无输入源对象设置键盘
+#pragma mark -- 自带输入源控件&&无输入源对象设置键盘
 @implementation UIView (JYKeyboardExtension)
-- (void)setInputViewWithKeyboard:(id<JYKeyboard>)keyboard {
-    [self setInputViewWithKeyboard:keyboard secureTextEntry:NO];
+- (void)setCustomKeyboard:(id<JYKeyboard>)keyboard {
+    if ([self systemCanInputSource]) {
+        if ([self isKindOfClass:[UISearchBar class]]) {
+            self.inputViewController.inputView = (UIInputView *)keyboard;
+        } else if ([self isKindOfClass:[UITextField class]]){
+            UITextField *tf = (UITextField *)self;
+            tf.inputView = (UIView *)keyboard;
+        } else if ([self isKindOfClass:[UITextView class]]) {
+            UITextView *tv = (UITextView *)self;
+            tv.inputView = (UIView *)keyboard;
+        }
+        JYAbstractKeyboard *kb = (JYAbstractKeyboard *)keyboard;
+        kb.delegate = self;
+        
+        [self.inputView reloadInputViews];
+    } else {
+        [self setCustomKeyboard:keyboard secureTextEntry:NO];
+    }
 }
 - (UIView *)inputSource {
     return self;
+}
+
+- (BOOL)systemCanInputSource {
+    if ([self isKindOfClass:[UITextField class]] || [self isKindOfClass:[UITextView class]] || [self isKindOfClass:[UISearchBar class]]) {
+        return YES;
+    }
+    return NO;
 }
 @end
 @implementation NSArray(Extension)

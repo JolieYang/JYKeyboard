@@ -121,13 +121,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Keyboard/JYKeyboard/JYViewInput.m"
-            timestampString = "516779793.553592"
+            filePath = "Keyboard/ViewController.m"
+            timestampString = "516787981.675085"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
-            landmarkName = "-dismissKB"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
+            landmarkName = "-inputSourceDefaultText:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -11,7 +11,7 @@
 #import "JYKeyboard.h"
 #import "JYViewInput.h"
 
-@interface ViewController ()<UITextFieldDelegate>
+@interface ViewController ()<UIViewInputDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *inputTF;
 @property (weak, nonatomic) IBOutlet UIButton *button;
 @property (weak, nonatomic) IBOutlet UILabel *label;
@@ -29,35 +29,37 @@
     // 1. 自定义键盘
     AliKeyboard *keyboard = [AliKeyboard standardShuffledKeyboard];
     self.inputTF.text = @"Rose";
-    self.inputTF.delegate = self;
-    [self.inputTF setInputViewWithKeyboard:keyboard];
+    [self.inputTF setCustomKeyboard:keyboard];
     
     // 2.无输入源控件添加输入响应--原生键盘
     [self.label setSystemKeyboardWithConfigBlock:^(JYKeyboardConfig *config) {
         config.keyboardType = UIKeyboardTypeNumberPad;
     }];
+    self.label.inputDelegate = self;
     
     // 3.无输入源控件添加输入响应--自定义键盘
     AliKeyboard *kb = [AliKeyboard standardShuffledKeyboard];
-    [self.customLabel setInputViewWithKeyboard:kb secureTextEntry:YES];
+    [self.customLabel setCustomKeyboard:kb secureTextEntry:YES];
     
 //    UITextField *tf = [[UITextField alloc] init];
 //    [self.button setInputViewWithTextField:tf];
 }
-
-#pragma mark UITextFieldDelegate
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    
-    return YES;
-}
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    
-}
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
-    return YES;
+#pragma mark -- Action
+- (IBAction)testAction:(id)sender {
+    [self.view endEditing:YES];
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+
+#pragma mark UIViewInputDelegate
+- (BOOL)inputSource:(UIView *)inputSource shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if ([inputSource isEqual:self.label]) {
+        if (self.label.text.length >= 6 && string.length > 0) {
+            return NO;
+        }
+    }
     return YES;
+}
+- (NSString *)inputSourceDefaultText:(UIView *)inputSource {
+    return @"Rose";
 }
 @end
