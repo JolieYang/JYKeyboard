@@ -17,23 +17,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lqk-oY-35z">
-                                <rect key="frame" x="94" y="45" width="133" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="133" id="tEN-mu-ope"/>
-                                </constraints>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lqk-oY-35z">
+                                <rect key="frame" x="27" y="28" width="133" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="98T-9T-AJG">
-                                <rect key="frame" x="137" y="110" width="46" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="98T-9T-AJG">
+                                <rect key="frame" x="214" y="28" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="testAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kby-1g-eh4"/>
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="hi" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="DCD-mW-zKQ">
-                                <rect key="frame" x="27" y="148" width="266" height="68"/>
+                                <rect key="frame" x="24" y="66" width="266" height="68"/>
                                 <color key="backgroundColor" red="0.92469114070000002" green="0.9219462276" blue="0.92479699849999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -52,22 +49,22 @@
                                 <color key="textColor" red="0.99963909390000005" green="1" blue="0.99975615740000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QDo-RZ-JSM">
+                                <rect key="frame" x="27" y="144" width="263" height="74"/>
+                                <color key="backgroundColor" red="0.3909927607" green="0.51907432080000004" blue="0.36644595860000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="Lqk-oY-35z" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="25" id="14Q-e2-Cc6"/>
-                            <constraint firstItem="Lqk-oY-35z" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4dL-EE-vhz"/>
-                            <constraint firstItem="98T-9T-AJG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="L6S-3f-MVu"/>
-                            <constraint firstItem="98T-9T-AJG" firstAttribute="top" secondItem="Lqk-oY-35z" secondAttribute="bottom" constant="35" id="PHj-u7-djW"/>
-                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="button" destination="98T-9T-AJG" id="oAF-wk-W5F"/>
                         <outlet property="customLabel" destination="E4B-d6-rqh" id="VT5-LC-jrt"/>
+                        <outlet property="customView" destination="QDo-RZ-JSM" id="308-ch-tJH"/>
                         <outlet property="inputTF" destination="Lqk-oY-35z" id="fAP-C9-7yE"/>
                         <outlet property="label" destination="eW4-MC-Vwa" id="QaN-lE-Xax"/>
                         <outlet property="textView" destination="DCD-mW-zKQ" id="9qu-xi-CdG"/>
+                        <outlet property="view" destination="QDo-RZ-JSM" id="GZU-Xt-rH9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

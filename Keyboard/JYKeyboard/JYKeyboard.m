@@ -9,6 +9,11 @@
 #import "JYKeyboard.h"
 #import "JYViewInput.h"
 
+typedef NS_ENUM(NSInteger, JYChangeText) {
+    JYChangeTextInsert = 0,
+    JYChangeTextDelete = 1
+};
+
 @interface JYAbstractKeyboard()<JYKeyboardDelegate>
 @end
 
@@ -27,34 +32,92 @@
     [self loadRandomItems];
 }
 - (IBAction)onKeyTouch:(id<JYKeyNote>)sender {
-    if ([_delegate respondsToSelector:@selector(keyboard:willInsertKey:)]) {
-        [_delegate keyboard:self willInsertKey:[sender keyValue]];
-    }
-    if ([_delegate inputSource]) {
-        id<UIKeyInput> inputObjcet = (id<UIKeyInput>)[_delegate inputSource];
-        [inputObjcet insertText:[sender keyValue]];
-    }
+    [self changeText:sender changeTextType:JYChangeTextInsert];
 }
 - (IBAction)onDelete:(id)sender {
-    if ([_delegate respondsToSelector:@selector(keyboardWillDeleteKey:)]) {
-        [_delegate keyboardWillDeleteKey:self];
-    }
-    if ([_delegate inputSource]) {
-        id<UIKeyInput> inputObjcet = (id<UIKeyInput>)[_delegate inputSource];
-        [inputObjcet deleteBackward];
-    }
-    
+    [self changeText:nil changeTextType:JYChangeTextDelete];
 }
 - (IBAction)onDone:(id)sender {
     if ([_delegate respondsToSelector:@selector(keyboardWillDone:)]) {
-        [_delegate keyboardWillDone:self];
+        BOOL shouldDone = [_delegate keyboardWillDone:self];
+        if (!shouldDone) return;
     }
     
-    if ([_delegate inputSource]) {
+    [self hideKeybaord];
+}
+- (IBAction)onHide:(id)sender {
+    if ([_delegate respondsToSelector:@selector(keyboardWillHide:)]) {
+        BOOL willHide = [_delegate keyboardWillHide:self];
+        if (!willHide) return;
+    }
+    
+    [self hideKeybaord];
+}
+- (IBAction)onClear:(id)sender {
+    if ([_delegate respondsToSelector:@selector(keyboardWillClear:)]) {
+        BOOL willClear = [_delegate keyboardWillClear:self];
+        if (!willClear) return;
+    }
+    
+    [self clearText];
+}
+
+#pragma mark -- Tool
+- (void)changeText:(id<JYKeyNote>)sender changeTextType:(JYChangeText)changeTextType {
+    id<UIKeyInput> inputObject;
+    NSString *currentText;
+    
+    if ([[_delegate inputSource] systemCanInputSource]) {
+        inputObject = (id<UIKeyInput>)[_delegate inputSource];
+    } else {
+        inputObject = [_delegate inputSource].associateKeyboardTextField;
+    }
+    
+    currentText = [((UIControl *)inputObject) valueForKey:@"text"];
+    if ([_delegate respondsToSelector:@selector(keyboard:shouldChangeText:replacementString:)]) {
+        BOOL shouldChange = [_delegate keyboard:self shouldChangeText:currentText replacementString:[sender keyValue]];
+        if (!shouldChange) return;
+    }
+    
+    if (changeTextType == JYChangeTextInsert) {
+        if ([_delegate respondsToSelector:@selector(keyboard:willInsertKey:)]) {
+            [_delegate keyboard:self willInsertKey:[sender keyValue]];
+        }
+        
+        [inputObject insertText:[sender keyValue]];
+    } else if (changeTextType == JYChangeTextDelete) {
+        if ([_delegate respondsToSelector:@selector(keyboardWillDeleteKey:)]) {
+            [_delegate keyboardWillDeleteKey:self];
+        }
+        
+        [inputObject deleteBackward];
+    }
+    
+    currentText = [((UIControl *)inputObject) valueForKey:@"text"];
+    [self didChangeToText:currentText];
+}
+
+- (void)didChangeToText:(NSString *)text {
+    if ([_delegate respondsToSelector:@selector(keyboard:didChangeToText:)]) {
+        [_delegate keyboard:self didChangeToText:text];
+    }
+}
+
+
+- (void)clearText {
+    if ([[_delegate inputSource] systemCanInputSource]) {
+        UIView *inputSource = [_delegate inputSource];
+        [inputSource setValue:nil forKey:@"text"];
+    } else {
+        [_delegate inputSource].associateKeyboardTextField.text = nil;
+    }
+}
+- (void)hideKeybaord {
+    if ([[_delegate inputSource] systemCanInputSource]) {
         UIView *inputSource = [_delegate inputSource];
         if ([inputSource isKindOfClass:[UITextField class]]) {
             UITextField *textField = (UITextField *)inputSource;
-            if (textField.delegate && [textField.delegate respondsToSelector:@selector(keyboardWillDone:)]) {
+            if (textField.delegate && [textField.delegate respondsToSelector:@selector(textFieldShouldEndEditing:)]) {
                 BOOL ret = [textField.delegate textFieldShouldEndEditing:textField];
                 [textField endEditing:ret];
             } else {
@@ -62,7 +125,7 @@
             }
         } else if ([inputSource isKindOfClass:[UITextView class]]) {
             UITextView *textView = (UITextView *)inputSource;
-            if (textView.delegate && [textView.delegate respondsToSelector:@selector(keyboardWillDone:)]) {
+            if (textView.delegate && [textView.delegate respondsToSelector:@selector(textViewShouldEndEditing:)]) {
                 BOOL ret = [textView.delegate textViewShouldEndEditing:textView];
                 [textView endEditing:ret];
             } else {
@@ -70,35 +133,17 @@
             }
         } else if ([inputSource isKindOfClass:[UISearchBar class]]) {
             UISearchBar *searchBar = (UISearchBar *)inputSource;
-            if (searchBar.delegate && [searchBar.delegate respondsToSelector:@selector(keyboardWillDone:)]) {
+            if (searchBar.delegate && [searchBar.delegate respondsToSelector:@selector(searchBarShouldEndEditing:)]) {
                 BOOL ret = [searchBar.delegate searchBarShouldEndEditing:searchBar];
                 [searchBar endEditing:ret];
             } else {
                 [searchBar resignFirstResponder];
             }
         }
+    } else {
+        [[_delegate inputSource].associateKeyboardTextField resignFirstResponder];
     }
 }
-- (IBAction)onClear:(id)sender {
-    if ([_delegate respondsToSelector:@selector(keyboardWillClear:)]) {
-        [_delegate keyboardWillClear:self];
-    }
-    if ([_delegate inputSource]) {
-        UIView *inputSource = [_delegate inputSource];
-        if ([inputSource isKindOfClass:[UITextField class]]) {
-            UITextField *textField = (UITextField *)inputSource;
-            textField.text = nil;
-        } else if ([inputSource isKindOfClass:[UITextView class]]) {
-            UITextView *textView = (UITextView *)inputSource;
-            textView.text = nil;
-        } else if ([inputSource isKindOfClass:[UISearchBar class]]) {
-            UISearchBar *searchBar = (UISearchBar *)inputSource;
-            searchBar.text = nil;
-        }
-    }
-}
-
-#pragma mark -- Tool
 - (void)loadRandomItems {
     // 保存frame值，打乱item，修改item的frame。要点，即使可以对randomItem进行深拷贝，但数组中的元素还是无法深拷贝，因而会出现bug。
     NSMutableArray *xArray = [NSMutableArray arrayWithCapacity:_randomItems.count];
@@ -134,38 +179,7 @@
     return self.titleLabel.text;
 }
 @end
-#pragma mark -- 自带输入源控件&&无输入源对象设置键盘
-@implementation UIView (JYKeyboardExtension)
-- (void)setCustomKeyboard:(id<JYKeyboard>)keyboard {
-    if ([self systemCanInputSource]) {
-        if ([self isKindOfClass:[UISearchBar class]]) {
-            self.inputViewController.inputView = (UIInputView *)keyboard;
-        } else if ([self isKindOfClass:[UITextField class]]){
-            UITextField *tf = (UITextField *)self;
-            tf.inputView = (UIView *)keyboard;
-        } else if ([self isKindOfClass:[UITextView class]]) {
-            UITextView *tv = (UITextView *)self;
-            tv.inputView = (UIView *)keyboard;
-        }
-        JYAbstractKeyboard *kb = (JYAbstractKeyboard *)keyboard;
-        kb.delegate = self;
-        
-        [self.inputView reloadInputViews];
-    } else {
-        [self setCustomKeyboard:keyboard secureTextEntry:NO];
-    }
-}
-- (UIView *)inputSource {
-    return self;
-}
 
-- (BOOL)systemCanInputSource {
-    if ([self isKindOfClass:[UITextField class]] || [self isKindOfClass:[UITextView class]] || [self isKindOfClass:[UISearchBar class]]) {
-        return YES;
-    }
-    return NO;
-}
-@end
 @implementation NSArray(Extension)
 - (NSArray *)shuffled {
     return [self sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {

@@ -155,7 +155,7 @@
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="onDone:" destination="QzD-Ml-TlD" eventType="touchUpInside" id="u2f-c6-0zg"/>
+                        <action selector="onHide:" destination="QzD-Ml-TlD" eventType="touchUpInside" id="Gvq-7Z-k0W"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L1O-Vc-epH">

@@ -10,6 +10,4 @@
 
 @interface AliKeyboard : JYAbstractKeyboard
 + (id)standardShuffledKeyboard;
-
-
 @end

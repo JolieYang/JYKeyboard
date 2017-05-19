@@ -121,13 +121,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Keyboard/ViewController.m"
-            timestampString = "516787981.675085"
+            filePath = "Keyboard/JYKeyboard/JYViewInput.m"
+            timestampString = "516870829.564598"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
-            landmarkName = "-inputSourceDefaultText:"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
+            landmarkName = "-keyboard:shouldChangeText:replacementString:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
